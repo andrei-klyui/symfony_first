@@ -19,32 +19,23 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    // /**
-    //  * @return Order[] Returns an array of Order objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $body
+     * @param $entityManager
+     * @return Order
+     */
+    public function orderSave($body, $entityManager): Order
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $test = new Order();
+        $test->setId($body['id']);
+        $test->setTotal($body['total']);
+        $test->setShippingTotal($body['shipping_total']);
+        $test->setCreateTime($body['create_time']);
+        $test->setTimezone($body['timezone']);
 
-    /*
-    public function findOneBySomeField($value): ?Order
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $entityManager->persist($test);
+        $entityManager->flush();
+
+        return $test;
     }
-    */
 }
