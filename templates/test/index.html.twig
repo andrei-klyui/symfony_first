@@ -1,0 +1,55 @@
+<div class="entry">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <a href="{{ path('index') }}">
+            <button type="button" class="btn btn-success">Continue</button>
+        </a>
+    </div>
+    <div>
+        <div style="width: 75%;">
+            <div class="text">
+                Products
+            </div>
+            {% if products %}
+                {% for product in products %}
+                    <div class="test1">
+                        <div class="test2">
+                            {{ product.SKU }}
+                        </div>
+                        <div class="test2">
+                            {{ product.title }}
+                        </div>
+                        <div class="test2">
+                            {{ product.image }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="small">
+            <div class="text">
+                Orders
+            </div>
+            {% if orders %}
+                {% for order in orders %}
+                    <div class="test1">
+                        <div class="test2">
+                            {{ order.id }}
+                        </div>
+                        <div class="test2">
+                            {{ order.total }}
+                        </div>
+                        <div class="test2">
+                            {{ order.shipping_total }}
+                        </div>
+                        <div class="test2">
+                            {{ order.create_time }}
+                        </div>
+                        <div class="test2">
+                            {{ order.timezone }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
