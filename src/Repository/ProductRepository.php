@@ -27,11 +27,9 @@ class ProductRepository extends ServiceEntityRepository
     public function productSave($body, $entityManager): Product
     {
         $test = new Product();
-        $test->setId($body['id']);
-        $test->setTotal($body['total']);
-        $test->setShippingTotal($body['shipping_total']);
-        $test->setCreateTime($body['create_time']);
-        $test->setTimezone($body['timezone']);
+        $test->setSKU($body['SKU']);
+        $test->setTitle($body['title']);
+        $test->setImage($body['image\base64;jpeg']);
 
         $entityManager->persist($test);
         $entityManager->flush();
