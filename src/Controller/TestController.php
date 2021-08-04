@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\Order;
+use App\Traits\TestTrait;
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
 {
+    use TestTrait;
+
     /**
      * @Route ("/", name="index")
      */
