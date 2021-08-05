@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,8 +32,12 @@ class ProductRepository extends ServiceEntityRepository
         $test->setTitle($body['title']);
         $test->setImage($body['image\base64;jpeg']);
 
-        $entityManager->persist($test);
-        $entityManager->flush();
+        try {
+            $entityManager->persist($test);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            throw new HttpException(400, "Error while saving the object!");
+        }
 
         return $test;
     }

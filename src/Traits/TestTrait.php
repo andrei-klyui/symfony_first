@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use GuzzleHttp\Client;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 trait TestTrait
 {
@@ -19,6 +20,12 @@ trait TestTrait
             ],
         ]);
 
+        $responseStatus = $response->getStatusCode();
+
+        if ($responseStatus !== 200) {
+            throw new HttpException(400, "Error receiving the token, please try again after some time!");
+        }
+
         $response = json_decode((string) $response->getBody(), true);
 
         return $token = $response['access_token'];
@@ -32,6 +39,12 @@ trait TestTrait
                 'Authorization' => $token,
             ],
         ]);
+
+        $responseStatus = $response->getStatusCode();
+
+        if ($responseStatus !== 200) {
+            throw new HttpException(400, "Error get string, please try again after some time!");
+        }
 
         $new = json_decode((string) $response->getBody(), true);
         $new2 = explode( ':', $new);

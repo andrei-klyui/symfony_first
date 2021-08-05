@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @method Order|null find($id, $lockMode = null, $lockVersion = null)
@@ -33,8 +34,12 @@ class OrderRepository extends ServiceEntityRepository
         $test->setCreateTime($body['create_time']);
         $test->setTimezone($body['timezone']);
 
-        $entityManager->persist($test);
-        $entityManager->flush();
+        try {
+            $entityManager->persist($test);
+            $entityManager->flush();
+        } catch (\Throwable $e) {
+            throw new HttpException(400, "Error while saving the object!");
+        }
 
         return $test;
     }
